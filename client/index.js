@@ -20,10 +20,10 @@ Template.downloadUrl.events({
     }
 });
 
-// Template.previewhead.preview = function() {
-//     var cachedUrls = CachedUrls.find({}).fetch();
-//     return cachedUrls[0];
-// };
+//Template.previewhead.preview = function() {
+//    var cachedUrls = CachedUrls.find({}).fetch();
+//    return cachedUrls[0];
+//};
 
 Template.preview.webpage = function() {
     var cachedUrls = CachedUrls.find({}).fetch();

@@ -53,6 +53,10 @@ Accounts.loginServiceConfiguration.insert({
 });
 
 Accounts.onCreateUser(function(options, user) {
+    user.profile = _.extend({}, options.profile, {
+        group_id: 1
+    });
+
     console.log('user', user);
     return user;
 });
