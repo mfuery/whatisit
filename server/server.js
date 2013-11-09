@@ -11,6 +11,21 @@ Meteor.methods({
         }
 
         var $ = cheerio.load(result.content);
+        $('link, img').each(function(){
+            var $this = $(this),
+                hasFullPath = /\/\/\w*\.?\w+.\w+/,
+                href;
+            if (href = $this.attr('href')) {
+                if (href.search(hasFullPath) === -1) {
+                    $this.attr('href', url + href);
+                }
+            } else {
+                var src = $this.attr('src');
+                if (src.search(hasFullPath) == -1) {
+                    $this.attr('src', url + src);
+                }
+            }
+        });
 
         CachedUrls.insert({
             url: url,

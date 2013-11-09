@@ -53,22 +53,6 @@
 </template>
 
 
-<template name="urlList">
-  <div class="row">
-    <h1>CachedUrls</h1>
-    <ul>
-    {{#each cached_urls}}
-      <li>
-        <div>URL: {{url}}</div>
-        <div>UserId: {{user_id}}</div>
-        <div>{{content}}</div>
-      </li>
-    {{/each}}
-    </ul>
-  </div>
-</template>
-
-
 <template name="dashboardPage">
   <!-- Main jumbotron for a primary marketing message or call to action -->
   <div class="jumbotron">
@@ -78,6 +62,9 @@
   </div>
 
   <div class="container">
+    <div id="preview" class="row">
+      {{> preview}}
+    </div>
     <div class="row">
       {{> urlList }}
     </div>
@@ -147,7 +134,10 @@
 </template>
 
 
-<template name="previewbody">{{{preview.body}}}</template>
+<template name="preview">
+  {{{webpage.head}}}
+  {{{webpage.body}}}
+</template>
 
 <template name="urlList">
   <div class="row">
