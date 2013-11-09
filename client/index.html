@@ -1,0 +1,29 @@
+<head>
+  <title>whatisit</title>
+</head>
+
+<body>
+  {{> basic}}
+  {{> urlList}}
+</body>
+
+<template name="basic">
+  <h1>Whatisit?</h1>
+  <div class="input-area">
+    <input type="text" placeholder="Enter URL" value="http://localhost:3000/" />
+    <button>Go</button>
+  </div>
+</template>
+
+<template name="urlList">
+  <h1>CachedUrls</h1>
+  <ul>
+  {{#each cached_urls}}
+    <li>
+      <div>URL: {{url}}</div>
+      <div>UserId: {{user_id}}</div>
+      <div><iframe>{{content}}</iframe></div>
+    </li>
+  {{/each}}
+  </ul>
+</template>

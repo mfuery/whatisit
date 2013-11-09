@@ -1,0 +1,13 @@
+body {
+    padding: 20px;
+}
+
+.input-area input[type=text] {
+    width: 400px;
+}
+
+iframe {
+    width: 90%;
+    height: 800px;
+    margin: 20px;
+}
