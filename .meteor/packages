@@ -9,5 +9,4 @@ preserve-inputs
 accounts-password
 accounts-ui
 http
-bootstrap
-backbone
+bootstrap-3
