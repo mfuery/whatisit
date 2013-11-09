@@ -1,22 +1,22 @@
 
 
+Template.page.isUserLoggedIn = function() {
+    console.log(!!Meteor.userId())
+    return !!Meteor.userId();
+}
+
+
 Template.urlList.cached_urls = function () {
     var cachedUrls = CachedUrls.find({}).fetch();
     return cachedUrls;
 };
 
-Template.basic.events({
-    'click button' : function () {
-        // todo
-    },
-    'keyup .input-area input': function (evt) {
-        if(evt.which === 13) {
-            var url = $(evt.target).val().trim();
-            //$(evt.target).val('');
-            Meteor.call('downloadUrl', url, Meteor.userId(), function(err, result) {
-                console.log(arguments);
-            });
-        }
+Template.downloadUrl.events({
+    'submit #fetch-url-form' : function (e) {
+        var url = $('#url-input').val().trim();
+        //$(evt.target).val('');
+        Meteor.call('downloadUrl', url, Meteor.userId());
+        return false;
     }
 });
 
@@ -37,4 +37,13 @@ Meteor.startup(function () {
 });
 
 $(document).ready(function() {
+});
+
+Meteor.Router.add({
+    '/': 'landingPage',
+    '/learn': 'learnPage',
+    '/dash': function() {
+        return Meteor.userId() ? 'dashboardPage' : 'landingPage';
+    },
+    '*': 'not_found'
 });

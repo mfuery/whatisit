@@ -17,12 +17,12 @@ Meteor.methods({
             user_id: user_id,
             content: result.content,
             head: $('head').html(),
-            body: $('body').html()
+            body: $('body').html(),
+            timestamp: Date.now()
         });
 
-
         return result;
-    },
+    }
 });
 
 Accounts.config({

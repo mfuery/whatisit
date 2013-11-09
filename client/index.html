@@ -7,6 +7,86 @@
 </body>
 
 <template name="page">
+  {{> toolbar }}
+
+  {{#isolate}} {{renderPage}} {{/isolate}}
+
+  <hr>
+
+  <footer>
+    <p>&copy; Company 2013</p>
+  </footer>
+
+</template>
+
+
+<template name="landingPage">
+  <!-- Main jumbotron for a primary marketing message or call to action -->
+  <div class="jumbotron">
+    <div class="container">
+      <h1>Whatisit?</h1>
+      <p>One seamless column of communication that transcends the software layers of the
+        business and technology stack.</p>
+      <p><a class="btn btn-primary btn-lg" role="button" href="/learn">Learn more &raquo;</a></p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      You've landed
+    </div>
+  </div>
+
+</template>
+
+
+<template name="downloadUrl">
+  <div class="row">
+    <h1>Download your site</h1>
+    <div class="input-area">
+      <form id="fetch-url-form">
+        <input id="url-input" type="text" placeholder="Enter URL" value="http://ftwgroup.com/" />
+        <input type="submit" id="fetch-url-button" class="btn" value="Fetch"/>
+      </form>
+    </div>
+  </div>
+</template>
+
+
+<template name="urlList">
+  <div class="row">
+    <h1>CachedUrls</h1>
+    <ul>
+    {{#each cached_urls}}
+      <li>
+        <div>URL: {{url}}</div>
+        <div>UserId: {{user_id}}</div>
+        <div>{{content}}</div>
+      </li>
+    {{/each}}
+    </ul>
+  </div>
+</template>
+
+
+<template name="dashboardPage">
+  <!-- Main jumbotron for a primary marketing message or call to action -->
+  <div class="jumbotron">
+    <div class="container">
+      {{> downloadUrl }}
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      {{> urlList }}
+    </div>
+  </div>
+
+</template>
+
+
+<template name="toolbar">
   <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
       <div class="navbar-header">
@@ -16,7 +96,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">Whatisit?</a>
+        <a class="navbar-brand" href="/">Whatisit?</a>
       </div>
       <div class="navbar-collapse collapse">
         <div class="span5 navbar-brand" style="float:right">
@@ -24,21 +104,28 @@
             {{ loginButtons align="right" }}
           </div>
         </div>
-      </div><!--/.navbar-collapse -->
+      </div>
     </div>
   </div>
 
-  <!-- Main jumbotron for a primary marketing message or call to action -->
+</template>
+
+
+<template name="learnPage">
   <div class="jumbotron">
     <div class="container">
-      {{> basic }}
-      <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-      <p><a class="btn btn-primary btn-lg" role="button">Learn more &raquo;</a></p>
+      <h1>Learn More</h1>
+      <div class="row">
+        <p>The core of the application is the ability to post
+          different types of messages (massmail, chat, post, etc.) to the network. Through
+          permissioning employees have access to the types of posts and information that
+          is most relevant to them. We use a custom algorithm to prioritize which posts
+          are sent and seen by whom.</p>
+      </div>
     </div>
   </div>
 
   <div class="container">
-    <!-- Example row of columns -->
     <div class="row">
       <div class="col-md-4">
         <h2>Heading</h2>
@@ -57,29 +144,10 @@
       </div>
     </div>
 
-    {{> urlList }}
-
-    <hr>
-
-    <footer>
-      <p>&copy; Company 2013</p>
-    </footer>
-  </div> <!-- /container -->
-
-
-
 </template>
 
-<template name="basic">
-  <div class="row">
-    <h1>Whatisit?</h1>
-    <div class="input-area">
-      <input type="text" placeholder="Enter URL" value="http://ftwgroup.com/" />
-      <button>Go</button>
-    </div>
-  </div>
-</template>
 
+<<<<<<< Updated upstream
 <template name="previewhead">{{{preview.head}}}</template>
 
 <template name="previewbody">{{{preview.body}}}</template>
@@ -99,4 +167,10 @@
     {{/each}}
     </ul>
   </div>
+=======
+
+<template name="not_found">
+  <h1>404</h1>
+  <h3>This is not the page you are looking for.</h3>
+>>>>>>> Stashed changes
 </template>
