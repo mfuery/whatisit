@@ -1,4 +1,5 @@
 ////////// Server only logic //////////
+var cheerio = Npm.require('cheerio');
 
 // Methods
 Meteor.methods({
@@ -9,12 +10,19 @@ Meteor.methods({
             throw result.error;
         }
 
+        var $ = cheerio.load(result.content);
+
         CachedUrls.insert({
             url: url,
             user_id: user_id,
-            content: result.content
+            content: result.content,
+            head: $('head').html(),
+            body: $('body').html()
         });
-    }
+
+
+        return result;
+    },
 });
 
 Accounts.config({

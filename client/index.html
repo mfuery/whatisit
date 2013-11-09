@@ -3,7 +3,9 @@
 </head>
 
 <body>
+  {{> previewhead}}
   {{> basic}}
+  {{> previewbody}}
   {{> urlList}}
 </body>
 
@@ -15,6 +17,10 @@
   </div>
 </template>
 
+<template name="previewhead">{{{preview.head}}}</template>
+
+<template name="previewbody">{{{preview.body}}}</template>
+
 <template name="urlList">
   <h1>CachedUrls</h1>
   <ul>
@@ -22,7 +28,9 @@
     <li>
       <div>URL: {{url}}</div>
       <div>UserId: {{user_id}}</div>
-      <div><iframe>{{content}}</iframe></div>
+      <div>head: {{head}}</div>
+      <div>body: {{body}}</div>
+      <div>content: {{content}}</div>
     </li>
   {{/each}}
   </ul>
