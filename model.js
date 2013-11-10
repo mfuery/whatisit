@@ -7,7 +7,7 @@
 CachedUrls = new Meteor.Collection('cached_urls');
 
 /* These are the revisions
- { user_id, cached_url_id, content, timestamp }
+ { user_id, group_id, cached_url_id, content, timestamp }
  */
 Pages = new Meteor.Collection('pages');
 
@@ -17,7 +17,7 @@ Pages = new Meteor.Collection('pages');
 ChatMessages = new Meteor.Collection('chat_messages');
 
 /*
- { user_id, page_id, name }
+ { user_id, group_id, page_id, name }
  */
 ChatRooms = new Meteor.Collection('chat_rooms');
 
@@ -35,6 +35,32 @@ ChatRooms = new Meteor.Collection('chat_rooms');
 
  */
 Notifications = new Meteor.Collection('notifications');
+NotificationType = {
+    BLOG: 0,
+    PRODUCT_PAGE: 1,
+    AB_TEST: 2,
+    CAMPAIGN: 3,
+    NEGATIVE_REVIEW: 4,
+    NEW_ADVOCATE: 5
+}
+
+User = {
+    get: function() {
+        return Meteor.user();
+    },
+    getId: function() {
+        return Meteor.userId();
+    },
+    getGroupId: function() {
+        var user = User.get();
+        var id = null;
+        if (user) {
+            id = user.profile.group_id;
+        }
+        return id;
+    }
+};
+
 
 if (Meteor.isServer) {
     Meteor.publish('cached_urls', function(user_id) {

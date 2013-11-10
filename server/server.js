@@ -1,6 +1,8 @@
 ////////// Server only logic //////////
 var cheerio = Npm.require('cheerio');
 
+DEFAULT_GROUP_ID = 1;
+
 // Methods
 Meteor.methods({
     downloadUrl: function(url, user_id) {
@@ -41,23 +43,26 @@ Meteor.methods({
         return result;
     },
 
-    saveChatRoom: function(name, page_id) {
+    saveChatRoom: function(name, page_id, group_id) {
         var _id = ChatRooms.insert({
             user_id: Meteor.userId(),
             name: name,
             page_id: page_id,
-            timestamp: Date.now()
+            timestamp: Date.now(),
+            group_id: group_id || DEFAULT_GROUP_ID
         });
+        Meteor.call('saveChatMessage', _id, 'Chat started', page_id, group_id);
         return _id;
     },
 
-    saveChatMessage: function(chat_room_id, msg, page_id) {
+    saveChatMessage: function(chat_room_id, msg, page_id, group_id) {
         var _id = ChatMessages.insert({
             user_id: Meteor.userId(),
             chat_room_id: chat_room_id,
             message: msg,
             page_id: page_id,
-            timestamp: Date.now()
+            timestamp: Date.now(),
+            group_id: group_id || DEFAULT_GROUP_ID
         });
         return _id;
     }
@@ -77,7 +82,7 @@ Accounts.loginServiceConfiguration.insert({
 
 Accounts.onCreateUser(function(options, user) {
     user.profile = _.extend({}, options.profile, {
-        group_id: 1
+        group_id: DEFAULT_GROUP_ID
     });
 
     console.log('user', user);

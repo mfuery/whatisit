@@ -220,7 +220,8 @@ Meteor.Router.add({
             return 'landingPage';
         }
         Session.set('chat_room_id', chat_room_id);
-        return 'chatPage';
+        return 'chatList';
     },
+    '/mass-mail': 'massmailPage',
     '*': 'not_found'
 });
