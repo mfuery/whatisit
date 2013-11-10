@@ -9,3 +9,11 @@ body {
 .highlight {
 	background: #ff0;
 }
+
+#menu {
+	background-color: #ff0;
+}
+
+#menu li {
+	display: inline-block;
+}

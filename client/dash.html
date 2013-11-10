@@ -14,4 +14,28 @@
       {{> urlList }}
     </div>
   </div>
+  {{> menu}}
+</template>
+
+<template name="preview">
+  {{{webpage.head}}}
+  {{{webpage.body}}}
+</template>
+
+<template name="menu"> 
+  <div id="menu">
+    <div id="navigation-assist">
+      <span class="glyphicon glyphicon-arrow-left"></span>
+      <span class="glyphicon glyphicon-arrow-up"></span>
+      <a id="edit">Edit</a>
+      <span class="glyphicon glyphicon-arrow-down"></span>
+      <span class="glyphicon glyphicon-arrow-right"></span>
+    </div>
+    <div id="edit-tools" style="display: none;">
+      <span class="glyphicon gliphicon-arrow-left"></span>
+      <span class="glyphicon gliphicon-arrow-left"></span>
+      <span class="glyphicon gliphicon-arrow-left"></span>
+      <span class="glyphicon gliphicon-arrow-left"></span>
+    </div>
+  </div>
 </template>

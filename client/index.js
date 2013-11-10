@@ -32,18 +32,99 @@ Template.preview.webpage = function() {
     var cachedUrls = CachedUrls.find({}).fetch();
     return cachedUrls[0];
 };
-var highlighted = null;
-Template.preview.events({
-    'mouseenter': function(e) {
-        var target = $(e.target);
-        if (highlighted) {
-            highlighted.removeClass('highlight');
-        }
-        highlighted = target;
-        highlighted.addClass('highlight');
-    },
-    'mouseleave': function(e) {
 
+function positionMenu($element) {
+    var menu = $('#menu'),
+        pos = $element.offset(),
+        width = $element.outerWidth();
+    menu.css({
+        position: "absolute",
+        top: (pos.top - 19) + "px",
+        left: pos.left + "px"
+    }).show();
+}
+
+var highlighted = null;
+var clicked = false;
+Template.preview.events({
+    'mouseenter div': function(e) {
+        if (!clicked) {
+            var target = $(e.target);
+
+            if (highlighted) {
+                $(highlighted).removeClass('highlight');
+            }
+            highlighted = e.target;
+            $(highlighted).addClass('highlight');
+            positionMenu(target);
+        }
+    },
+    'click': function(e) {
+        e.preventDefault();
+        clicked = !clicked;
+    },
+    'mouseleave #preview': function(e) {
+        if(highlighted) {
+            $(highlighted).removeClass('highlight');
+        }
+        $('#menu').hide();
+    }
+});
+
+function domWalk(element, direction) {
+    var $highlighted = $(element),
+        newDom;
+    $highlighted.removeClass('highlight');
+    switch(direction) {
+        case 'left':
+        newDom = $highlighted.prev();
+        break;
+        case 'right':
+        newDom = $highlighted.next();
+        break;
+        case 'up':
+        newDom = $highlighted.parent();
+        break;
+        case 'down':
+        newDom = $highlighted.children().first();
+        break;
+        default:
+        throw new Error;
+    }
+    highlighted = newDom.get(0);
+    newDom.addClass('highlight');
+    positionMenu(newDom);
+    return newDom;
+}
+
+Template.menu.events({
+    'click .glyphicon-arrow-left': function(e){
+        e.preventDefault();
+        clicked = true;
+        if (highlighted) {
+            var element = domWalk(highlighted, 'left');
+        }
+    },
+    'click .glyphicon-arrow-right': function(e){
+        e.preventDefault();
+        clicked = true;
+        if (highlighted) {
+            var element = domWalk(highlighted, 'right');
+        }
+    },
+    'click .glyphicon-arrow-up': function(e){
+        e.preventDefault();
+        clicked = true;
+        if (highlighted) {
+            var element = domWalk(highlighted, 'up');
+        }
+    },
+    'click .glyphicon-arrow-down': function(e){
+        e.preventDefault();
+        clicked = true;
+        if (highlighted) {
+            var element = domWalk(highlighted, 'down');
+        }
     }
 });
 
@@ -54,7 +135,7 @@ Meteor.startup(function () {
 });
 
 $(document).ready(function() {
-
+    $('#menu').hide();
 });
 
 Meteor.Router.add({
