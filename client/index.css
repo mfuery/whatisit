@@ -5,3 +5,7 @@ body {
 .input-area input[type=text] {
     width: 75%;
 }
+
+.highlight {
+	background: #ff0;
+}
