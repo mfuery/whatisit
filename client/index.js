@@ -146,19 +146,19 @@ Meteor.startup(function () {
 
 $(document).ready(function() {
     $('#menu').hide();
-    $('.nav a').each(function(i, el){
-        el.click(function(){
-            $(this).addClass('active');
-        });
-    });
+//    $('.nav a').each(function(i, el){
+//        $(el).parent('li').on('click', function(){
+//            $(this).addClass('active');
+//        });
+//    });
 });
 
 // to set a callback to run before any routing function. Useful to reset session variables.
-Meteor.Router.beforeRouting = function() {
-    $('.nav a').each(function(i, el){
-        $(el).removeClass('active');
-    });
-};
+//Meteor.Router.beforeRouting = function() {
+//    $('.nav li').each(function(i, el){
+//        $(el).removeClass('active');
+//    });
+//};
 
 
 

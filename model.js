@@ -21,6 +21,21 @@ ChatMessages = new Meteor.Collection('chat_messages');
  */
 ChatRooms = new Meteor.Collection('chat_rooms');
 
+/*
+ {group_id, type, timestamp, data:{}}
+ same collection, different 'type' and accompanying metadata object
+ sort by marketing_score
+
+ Marketing Blog Post performance
+ Product eCommerce page w/ stats: visits, conversion rate, time viewed
+ A/B Test score
+ Campaign Goals and status
+ Negative Review alert
+ New “advocate” - indication of virality, brand improving
+
+ */
+Notifications = new Meteor.Collection('notifications');
+
 if (Meteor.isServer) {
     Meteor.publish('cached_urls', function(user_id) {
         var where = {};

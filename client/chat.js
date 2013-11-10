@@ -1,7 +1,7 @@
 /**
  * @fileoverview
  */
- 
+
 Template.chatList.chatRooms = function() {
     var chatRooms = ChatRooms.find({}).fetch();
     return chatRooms;
@@ -14,6 +14,8 @@ Template.chatList.events({
             Session.set('chat_room_id', _id);
             Meteor.Router.to('/chat/' + _id);
         });
+        $('#chat-room-input').focus();
+        $('#chat-history').scrollTop(99999999);
         return false;
     }
 });
