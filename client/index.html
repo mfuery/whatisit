@@ -3,7 +3,6 @@
 </head>
 
 <body>
-  <div style="clear:both; width:100%; height: 40px; display:block;"></div>
   {{> page }}
 
 </body>
@@ -25,13 +24,11 @@
 </template>
 
 <template name="visitorPage">
-  Enter content here.
   {{{webpage.head}}}
   {{{webpage.body}}}
 </template>
 
 <template name="landingPage">
-  <!-- Main jumbotron for a primary marketing message or call to action -->
   <div class="jumbotron">
     <div class="container">
       <h1>Whatisit?</h1>
@@ -59,18 +56,5 @@
         <input type="submit" id="fetch-url-button" class="btn" value="Fetch"/>
       </form>
     </div>
-  </div>
-</template>
-
-<template name="urlList">
-  <div class="row">
-    <h1>Pages</h1>
-    <ul>
-    {{#each pages}}
-      <li>
-        <div><a href="/page/{{page_id}}">[{{formatDate timestamp "long"}}] URL: {{url}}</a></div>
-      </li>
-    {{/each}}
-    </ul>
   </div>
 </template>

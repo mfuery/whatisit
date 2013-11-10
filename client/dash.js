@@ -6,6 +6,7 @@ Template.dashboardPage.events({
         Meteor.call('downloadUrl', url, Meteor.userId(), function(error, page_id) {
             Session.set('page_id', page_id);
             Meteor.Router.to('/page/' + page_id);
+            $('body').scrollTop();
         });
         return false;
     }

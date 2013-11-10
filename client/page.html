@@ -1,0 +1,44 @@
+
+<template name="pageList">
+  <div class="jumbotron">
+    <div class="container">
+      <h1>Pages</h1>
+      <p>Here you can make edits and add/remove widgets to the following pages.</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <ul class="list-unstyled">
+          {{#each pagesList}}
+            <li><a href="/page/{{_id}}">[{{formatDate timestamp "long"}}] {{name}} {{url}}</a></li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</template>
+
+<template name="visitorPageList">
+  <div class="jumbotron">
+    <div class="container">
+      <h1>Pages</h1>
+      <p>View latest editions of dynamically generated webpages.</p>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+
+      <div class="col-md-6">
+        <ul class="list-unstyled">
+          {{#each pagesList}}
+            <li><a href="/page/{{_id}}">{{url}}</a></li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</template>

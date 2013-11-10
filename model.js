@@ -8,7 +8,7 @@ APP_COOKIE_NAMESPACE = '__wiit';
 PageEdits = new Meteor.Collection('page_edits');
 
 /* These are the revisions
- { user_id, group_id, content, timestamp }
+ { user_id, group_id, url, content, timestamp }
  */
 Pages = new Meteor.Collection('pages');
 
@@ -58,7 +58,7 @@ AppCookie = {
 
 /*
  Anonymous users/unique users via cookie
- { pages:[{page_id, visits:int, score:int}] }
+ { stats: [{page_id, visits:int}] }
  */
 Visitors = new Meteor.Collection('visitors');
 

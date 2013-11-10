@@ -16,13 +16,6 @@ Handlebars.registerHelper("formatDate", function(timestamp, format) {
     }
 });
 
-Template.urlList.pages = function () {
-    var pages = Pages.find({
-        //group_id: 1 // TODO
-    }).fetch();
-    return pages;
-};
-
 function Test(e) {}
 
 
@@ -67,7 +60,7 @@ Template.preview.rendered = function() {
 
 function positionMenu($element) {
     var menu = $('#menu'),
-        pos = $element.offset(),
+        pos = $element.offset() || {top:0, left:0},
         width = $element.outerWidth();
     menu.css({
         position: "absolute",
@@ -217,7 +210,7 @@ Template.visitorPage.webpage = function() {
 Template.visitorPage.rendered = function() {
     var visitor_id = Cookie.get(AppCookie.visitor_id);
     var page_id = Session.get('page_id');
-    var edits = Pages.find({}).fetch();
+    var edits = Pages.find({page_id: page_id}).fetch();
     Meteor.call('visitor.update', visitor_id, page_id, function(err, visitor_id) {
         if (Cookie.get(AppCookie.visitor_id)) {
             console.log('welcome back, visitor ' + visitor_id);
@@ -237,6 +230,7 @@ Meteor.startup(function () {
 
         if (Meteor.userId()) {
             Meteor.subscribe('chat_rooms');
+            Meteor.subscribe('visitors');
 
             if (Session.get('chat_room_id')) {
                 Meteor.subscribe('chat_messages', Session.get('chat_room_id'));
@@ -248,6 +242,7 @@ Meteor.startup(function () {
 $(document).ready(function() {
     $('#menu').hide();
 //    $('.nav a').each(function(i, el){
+        // active nav link can be bolded?
 //        $(el).parent('li').on('click', function(){
 //            $(this).addClass('active');
 //        });
@@ -256,6 +251,7 @@ $(document).ready(function() {
 
 // to set a callback to run before any routing function. Useful to reset session variables.
 //Meteor.Router.beforeRouting = function() {
+    // active nav link can be bolded?
 //    $('.nav li').each(function(i, el){
 //        $(el).removeClass('active');
 //    });
@@ -271,6 +267,12 @@ Meteor.Router.add({
         }
         return 'dashboardPage';
     },
+    '/page': function() {
+        if (!Meteor.userId()) {
+            return 'visitorPageList';
+        }
+        return 'pageList';
+    },
     '/page/:page_id': function(page_id) {
         if (!Meteor.userId()) {
             if (Template.page.isVisitorPage()) {
@@ -280,7 +282,7 @@ Meteor.Router.add({
             return 'landingPage';
         }
         Session.set('page_id', page_id);
-        return 'dashboardPage';
+        return 'editPage';
     },
     '/chat': function() {
         if (!Meteor.userId()) {
@@ -297,6 +299,7 @@ Meteor.Router.add({
         Session.set('chat_room_id', chat_room_id);
         return 'chatList';
     },
+    '/metrics': 'metricsPage',
     '/mass-mail': 'massmailPage',
     '*': 'not_found'
 });

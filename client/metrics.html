@@ -1,0 +1,29 @@
+<template name="metricsPage">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <table>
+          <thead>
+            <tr>
+              <td>User</td>
+              <td>URL</td>
+              <td>Visits</td>
+              <td></td>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each pageActivity}}
+            <tr>
+              <td>{{user_id}}</td>
+              <td>{{url}}</td>
+              <td>{{visits}}</td>
+              <td></td>
+            </tr>
+            {{/each}}
+          </tbody>
+          <tfoot></tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</template>
