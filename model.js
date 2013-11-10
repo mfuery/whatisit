@@ -44,6 +44,12 @@ NotificationType = {
     NEW_ADVOCATE: 5
 }
 
+/*
+ {  }
+ */
+Visitors = new Meteor.Collection('visitors');
+
+
 User = {
     get: function() {
         return Meteor.user();

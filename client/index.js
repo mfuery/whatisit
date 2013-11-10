@@ -24,6 +24,16 @@ Template.urlList.cached_urls = function () {
 function Test(e) {}
 
 
+Template.page.isVisitorPage = function() {
+    var url = (window.location.pathname + '').match(/\/page\/([a-z0-9]+)/i);
+    var page_id;
+    if (url && url[1]) {
+        page_id = url[1];
+    }
+    return (!User.getId() && page_id);
+}
+
+
 //Template.previewhead.preview = function() {
 //    var cachedUrls = CachedUrls.find({}).fetch();
 //    return cachedUrls[0];
@@ -212,6 +222,9 @@ Meteor.Router.add({
     },
     '/page/:page_id': function(page_id) {
         if (!Meteor.userId()) {
+            if (Template.page.isVisitorPage()) {
+                return 'visitorPage';
+            }
             Meteor.Router.to('/');
             return 'landingPage';
         }

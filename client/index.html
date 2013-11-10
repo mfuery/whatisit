@@ -9,20 +9,24 @@
 </body>
 
 <template name="page">
-  {{> toolbar }}
+  {{#if isVisitorPage }}
+  {{else}}
+    {{> toolbar }}
+  {{/if}}
 
-  {{#isolate}}
-    {{renderPage}}
-  {{/isolate}}
+    {{#isolate}}
+      {{renderPage}}
+    {{/isolate}}
 
-  <hr>
-
-  <footer>
-    <p>&copy; Company 2013</p>
-  </footer>
-
+  {{#if isVisitorPage }}
+  {{else}}
+    {{> footer }}
+  {{/if}}
 </template>
 
+<template name="visitorPage">
+  Visitor Page, enter content
+</template>
 
 <template name="landingPage">
   <!-- Main jumbotron for a primary marketing message or call to action -->

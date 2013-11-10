@@ -5,7 +5,7 @@ DEFAULT_GROUP_ID = 1;
 
 // Methods
 Meteor.methods({
-    downloadUrl: function(url, user_id) {
+    downloadUrl: function(url, user_id, group_id) {
         var result = Meteor.http.get(url, {
         });
         if(result.error) {
