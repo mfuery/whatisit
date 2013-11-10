@@ -4,7 +4,7 @@
 /*
  { user_id: 123, url, content, name }
  */
-CachedUrls = new Meteor.Collection('cached_urls');
+PageEdits = new Meteor.Collection('page_edits');
 
 /* These are the revisions
  { user_id, group_id, cached_url_id, content, timestamp }
@@ -63,12 +63,15 @@ User = {
 
 
 if (Meteor.isServer) {
-    Meteor.publish('cached_urls', function(user_id) {
+    Meteor.publish('pages', function(group_id, user_id) {
         var where = {};
+        if (group_id) {
+            where.group_id = group_id;
+        }
         if (user_id) {
             where.user_id = user_id;
         }
-        return CachedUrls.find(where, {sort:{timestamp:-1}});
+        return Pages.find(where, {sort:{timestamp:-1}});
     });
 
     Meteor.publish('chat_messages', function(chat_room_id) {

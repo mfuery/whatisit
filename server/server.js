@@ -31,16 +31,17 @@ Meteor.methods({
             }
         });
 
-        CachedUrls.insert({
+        var page_id = Pages.insert({
             url: url,
             user_id: user_id,
             content: result.content,
             head: $('head').html(),
             body: $('body').html(),
-            timestamp: Date.now()
+            timestamp: Date.now(),
+            group_id: group_id || DEFAULT_GROUP_ID
         });
 
-        return result;
+        return page_id;
     },
 
     saveChatRoom: function(name, page_id, group_id) {
@@ -65,6 +66,9 @@ Meteor.methods({
             group_id: group_id || DEFAULT_GROUP_ID
         });
         return _id;
+    },
+
+    savePageEdit: function(page_id) {
     }
 });
 

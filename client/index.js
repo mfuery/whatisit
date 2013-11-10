@@ -17,8 +17,8 @@ Handlebars.registerHelper("formatDate", function(timestamp, format) {
 });
 
 Template.urlList.cached_urls = function () {
-    var cachedUrls = CachedUrls.find({}).fetch();
-    return cachedUrls;
+    var pages = Pages.find({}).fetch();
+    return pages;
 };
 
 function Test(e) {}
@@ -30,8 +30,8 @@ function Test(e) {}
 //};
 
 Template.preview.webpage = function() {
-    var cachedUrls = CachedUrls.find({}).fetch();
-    return cachedUrls[0];
+    var pages = Pages.find({}).fetch();
+    return pages[0];
 };
 
 function positionMenu($element) {
@@ -153,6 +153,9 @@ Template.menu.events({
                 throw new Error;
             }
         }
+
+        // TODO here
+        Meteor.call('savePageEdit', Session.get('page_id'));
     },
     'click #save': function(e){
         e.preventDefault();
@@ -169,7 +172,7 @@ Meteor.startup(function () {
 
     Deps.autorun(function () {
         if (Meteor.userId()) {
-            Meteor.subscribe('cached_urls', Meteor.userId());
+            Meteor.subscribe('pages');
             Meteor.subscribe('chat_rooms');
 
             if (Session.get('chat_room_id')) {
@@ -205,6 +208,14 @@ Meteor.Router.add({
             Meteor.Router.to('/');
             return 'landingPage';
         }
+        return 'dashboardPage';
+    },
+    '/page/:page_id': function(page_id) {
+        if (!Meteor.userId()) {
+            Meteor.Router.to('/');
+            return 'landingPage';
+        }
+        Session.set('page_id', page_id);
         return 'dashboardPage';
     },
     '/chat': function() {
