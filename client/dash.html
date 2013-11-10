@@ -2,7 +2,15 @@
 <template name="dashboardPage">
   <div class="jumbotron">
     <div class="container">
-      {{> downloadUrl }}
+      <div class="row">
+        <h1>Download your site</h1>
+        <div class="input-area">
+          <form id="fetch-url-form">
+            <input id="url-input" type="text" placeholder="Enter URL" value="http://ftwgroup.com/" />
+            <input type="submit" id="fetch-url-button" class="btn" value="Fetch"/>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 

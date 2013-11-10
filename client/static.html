@@ -12,6 +12,13 @@
         <a class="navbar-brand" href="/">Whatisit?</a>
       </div>
       <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          {{#if isLoggedIn}}
+            <li><a id="nav-dash" href="/dash">Dashboard</a></li>
+            <li><a id="nav-mass-mail" href="/mass-mail">Mass mail</a></li>
+            <li><a id="nav-chat" href="/chat">Live Chat</a></li>
+          {{/if}}
+        </ul>
         <div class="span5 navbar-brand" style="float:right">
           <div>
             {{ loginButtons align="right" }}
@@ -65,6 +72,5 @@
     <div class="container">
       <h1>404</h1>
       <h3>This is not the page you are looking for.</h3>
-    </div>
-  </div>
+
 </template>

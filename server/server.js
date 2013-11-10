@@ -37,6 +37,27 @@ Meteor.methods({
         });
 
         return result;
+    },
+
+    saveChatRoom: function(name, page_id) {
+        var _id = ChatRooms.insert({
+            user_id: Meteor.userId(),
+            name: name,
+            page_id: page_id,
+            timestamp: Date.now()
+        });
+        return _id;
+    },
+
+    saveChatMessage: function(chat_room_id, msg, page_id) {
+        var _id = ChatMessages.insert({
+            user_id: Meteor.userId(),
+            chat_room_id: chat_room_id,
+            message: msg,
+            page_id: page_id,
+            timestamp: Date.now()
+        });
+        return _id;
     }
 });
 
