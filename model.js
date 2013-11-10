@@ -7,7 +7,7 @@
 PageEdits = new Meteor.Collection('page_edits');
 
 /* These are the revisions
- { user_id, group_id, cached_url_id, content, timestamp }
+ { user_id, group_id, content, timestamp }
  */
 Pages = new Meteor.Collection('pages');
 
@@ -20,6 +20,11 @@ ChatMessages = new Meteor.Collection('chat_messages');
  { user_id, group_id, page_id, name }
  */
 ChatRooms = new Meteor.Collection('chat_rooms');
+
+/*
+{ user_id, group_id, page_id, type }
+*/
+Content = new Meteor.Collection('content');
 
 /*
  {group_id, type, timestamp, data:{}}

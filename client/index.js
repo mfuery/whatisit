@@ -149,19 +149,30 @@ Template.menu.events({
             position = $select.last().val();
         if (type && position) {
             var $highlighted = $(highlighted);
-            switch(type) {
-                case "ab":
-                $highlighted[position]('<div></div>');
-                break;
-                case "post":
-                $highlighted[position]('<div></div>');
-                break;
-                case "html":
-                $highlighted[position]('<div></div>');
-                break;
-                default:
-                throw new Error;
-            }
+            //{ user_id, group_id, page_id, type }
+            var content_id = Content.insert({
+                page_id: Session.get('page_id'),
+                group_id: User.getGroupId(),
+                type: type
+            }, function(error, content_id) {
+                console.log(content_id);
+                var newDiv = $('<div data-content="'+content_id+'">Post</div>')
+                switch(type) {
+                    case "ab":
+                    $highlighted[position](newDiv);
+                    break;
+                    case "post":
+                    $highlighted[position](newDiv);
+                    break;
+                    case "html":
+                    $highlighted[position](newDiv);
+                    break;
+                    default:
+                    throw new Error;
+                }
+                $('#edit-tools').hide();
+                $('#navigation-assist').show();
+            });
         }
 
         // TODO here
