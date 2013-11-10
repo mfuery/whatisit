@@ -93,32 +93,43 @@ Meteor.methods({
 
     'visitor.update': function(visitor_id, page_id) {
         /* { jnJbhD937Hnd: {visits: 1} } */
-        var transactionObj = {
-            page_id: page_id,
-            timestamp: Date.now()
+
+        // Validate visitor exists. Insert if NE
+        if (!visitor_id || !Visitors.find({_id: visitor_id})) {
+            visitor_id = Visitors.insert({
+                stats: {},
+                transactions: []
+            });
+            console.log('visitor_id: '+visitor_id);
+        }
+
+        // Visitor data
+        var updateObj = {
+            $push: {
+                transactions: {
+                    page_id: page_id,
+                    timestamp: Date.now()
+                }
+            },
+            $inc: {}
         };
-
-        if (!visitor_id) {
-            var insertObj = {
-                transactions: transactionObj
-            };
-            insertObj[page_id] = 1;
-            visitor_id = Visitors.insert(insertObj);
-        } else {
-            var updateObj = {
-                $inc: {},
-                $push: {transactions: transactionObj}
-            };
-            updateObj['$inc'][page_id] = 1;
-            Visitors.update({
-                _id: visitor_id
-            }, updateObj);
+        if (page_id) {
+            // we should always have page_id, though.
+            var key = 'stats.' + page_id + '.visits';
+            updateObj.$inc[key] = 1;
         }
+        Visitors.update({
+            _id: visitor_id
+        }, updateObj);
 
-        var v = Visitors.find().fetch();
+
+        var v = Visitors.find().fetch().pop();
         if (v) {
-            console.log(v, v.transactions);
+            console.log('visitor_id', v._id, v.stats);
+            //console.log(v.transactions);
         }
+        //console.log('ALL:');
+        //console.log(Visitors.find().fetch());
 
         return visitor_id;
     }
