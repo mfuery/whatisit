@@ -47,6 +47,24 @@ Template.preview.webpage = function() {
     return pages[0];
 };
 
+function appendJavascript(pages) {
+    if (pages.length > 0) {
+        console.log("pages", pages);
+        var scripts = pages[0].scripts;
+        for (var i = scripts.length - 1; i >= 0; i--) {
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = scripts[i].src;
+            $('body').append(script);
+        };
+    }
+}
+
+Template.preview.rendered = function() {
+    var pages = Pages.find({}).fetch();
+    appendJavascript(pages);
+};
+
 function positionMenu($element) {
     var menu = $('#menu'),
         pos = $element.offset(),
@@ -191,12 +209,31 @@ Template.menu.events({
     }
 });
 
+Template.visitorPage.webpage = function() {
+    var edits = Pages.find({}).fetch();
+    return edits[0];
+};
+
+Template.visitorPage.rendered = function() {
+    var visitor_id = Cookie.get(AppCookie.visitor_id);
+    var page_id = Session.get('page_id');
+    var edits = Pages.find({}).fetch();
+    Meteor.call('visitor.update', visitor_id, page_id, function(err, visitor_id) {
+        Cookie.set(AppCookie.visitor_id, visitor_id);
+        console.log('yes')
+        console.log(Visitors.find().fetch());
+        console.log(visitor_id);
+    });
+    appendJavascript(edits);
+}
+
 Meteor.startup(function () {
     // code to run on client load (not necessarily dom ready)
 
     Deps.autorun(function () {
+        Meteor.subscribe('pages');
+
         if (Meteor.userId()) {
-            Meteor.subscribe('pages');
             Meteor.subscribe('chat_rooms');
 
             if (Session.get('chat_room_id')) {
@@ -221,8 +258,6 @@ $(document).ready(function() {
 //        $(el).removeClass('active');
 //    });
 //};
-
-
 
 Meteor.Router.add({
     '/': 'landingPage',

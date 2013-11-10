@@ -13,7 +13,7 @@ Meteor.methods({
         }
         console.log(result);
         var $ = cheerio.load(result.content);
-        $('link, img, script').each(function(){
+        $('link, img').each(function(){
             var $this = $(this),
                 hasFullPath = /\/\/\w*\.?\w+.\w+/,
                 href, src;
@@ -30,6 +30,25 @@ Meteor.methods({
                 }
             }
         });
+        var scripts = [];
+        $('script').each(function(){
+           var $this = $(this),
+                hasFullPath = /\/\/\w*\.?\w+.\w+/,
+                src, scriptTag;
+            src = $this.attr('src');
+            if (src) {
+                if (src.search(hasFullPath) === -1) {
+                    console.log(src);
+                    $this.attr('src', url + src);
+                }
+            }
+            scriptTag = {
+                src: $this.attr('src'),
+                html: $this.html()
+            };
+            scripts.push(scriptTag);
+            $this.remove();
+        });
 
         var page_id = Pages.insert({
             url: url,
@@ -37,6 +56,7 @@ Meteor.methods({
             content: result.content,
             head: $('head').html(),
             body: $('body').html(),
+            scripts: scripts,
             timestamp: Date.now(),
             group_id: group_id || DEFAULT_GROUP_ID
         });
