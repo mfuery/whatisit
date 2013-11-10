@@ -40,10 +40,21 @@
       <span class="glyphicon glyphicon-arrow-right"></span>
     </div>
     <div id="edit-tools" style="display: none;">
-      <span class="glyphicon gliphicon-arrow-left"></span>
-      <span class="glyphicon gliphicon-arrow-left"></span>
-      <span class="glyphicon gliphicon-arrow-left"></span>
-      <span class="glyphicon gliphicon-arrow-left"></span>
+      <select>
+        <option value="">-------</option>
+        <option value="ab">A/B test</option>
+        <option value="post">insert post</option>
+        <option value="html">insert html</option>
+        <option>comment</option>
+      </select>
+      <select>
+        <option value="">-------</option>
+        <option value="prepend">prepend</option>
+        <option value="append">append</option>
+        <option value="html">replace</option>
+      </select>
+      <a id="go">Go</a> | 
+      <a id="cancel">Cancel</a>
     </div>
   </div>
 </template>

@@ -9,20 +9,22 @@ Meteor.methods({
         if(result.error) {
             throw result.error;
         }
-
+        console.log(result);
         var $ = cheerio.load(result.content);
-        $('link, img').each(function(){
+        $('link, img, script').each(function(){
             var $this = $(this),
                 hasFullPath = /\/\/\w*\.?\w+.\w+/,
-                href;
-            if (href = $this.attr('href')) {
+                href, src;
+            if ((href = $this.attr('href'))) {
                 if (href.search(hasFullPath) === -1) {
                     $this.attr('href', url + href);
                 }
             } else {
-                var src = $this.attr('src');
-                if (src.search(hasFullPath) == -1) {
-                    $this.attr('src', url + src);
+                if ((src = $this.attr('src'))) {
+                    if (src.search(hasFullPath) === -1) {
+                        console.log(src);
+                        $this.attr('src', url + src);
+                    }
                 }
             }
         });

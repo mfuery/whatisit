@@ -126,6 +126,41 @@ Template.menu.events({
         if (highlighted) {
             var element = domWalk(highlighted, 'down');
         }
+    },
+    'click #edit': function(e){
+        e.preventDefault();
+        $('#navigation-assist').hide();
+        $('#edit-tools').show();
+    },
+    'click #go': function(e) {
+        e.preventDefault();
+        var $select = $('#edit-tools').find('select'),
+            type = $select.first().val(),
+            position = $select.last().val();
+        if (type && position) {
+            var $highlighted = $(highlighted);
+            switch(type) {
+                case "ab":
+                $highlighted[position]('<div></div>');
+                break;
+                case "post":
+                $highlighted[position]('<div></div>');
+                break;
+                case "html":
+                $highlighted[position]('<div></div>');
+                break;
+                default:
+                throw new Error;
+            }
+        }
+    },
+    'click #save': function(e){
+        e.preventDefault();
+    },
+    'click #cancel': function(e){
+        e.preventDefault();
+        $('#edit-tools').hide();
+        $('#navigation-assist').show();
     }
 });
 
