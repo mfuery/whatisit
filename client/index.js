@@ -16,8 +16,10 @@ Handlebars.registerHelper("formatDate", function(timestamp, format) {
     }
 });
 
-Template.urlList.cached_urls = function () {
-    var pages = Pages.find({}).fetch();
+Template.urlList.pages = function () {
+    var pages = Pages.find({
+        //group_id: 1 // TODO
+    }).fetch();
     return pages;
 };
 
@@ -30,6 +32,7 @@ Template.page.isVisitorPage = function() {
     if (url && url[1]) {
         page_id = url[1];
     }
+    Session.set('page_id', page_id);
     return (!User.getId() && page_id);
 }
 

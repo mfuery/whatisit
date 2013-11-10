@@ -69,6 +69,38 @@ Meteor.methods({
     },
 
     savePageEdit: function(page_id) {
+    },
+
+    'visitor.update': function(visitor_id, page_id) {
+        /* { jnJbhD937Hnd: {visits: 1} } */
+        var transactionObj = {
+            page_id: page_id,
+            timestamp: Date.now()
+        };
+
+        if (!visitor_id) {
+            var insertObj = {
+                transactions: transactionObj
+            };
+            insertObj[page_id] = 1;
+            visitor_id = Visitors.insert(insertObj);
+        } else {
+            var updateObj = {
+                $inc: {},
+                $push: {transactions: transactionObj}
+            };
+            updateObj['$inc'][page_id] = 1;
+            Visitors.update({
+                _id: visitor_id
+            }, updateObj);
+        }
+
+        var v = Visitors.find().fetch();
+        if (v) {
+            console.log(v, v.transactions);
+        }
+
+        return visitor_id;
     }
 });
 

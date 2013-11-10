@@ -62,15 +62,11 @@
 
 <template name="urlList">
   <div class="row">
-    <h1>CachedUrls</h1>
+    <h1>Pages</h1>
     <ul>
-    {{#each cached_urls}}
+    {{#each pages}}
       <li>
-        <div>URL: {{url}}</div>
-        <div>UserId: {{user_id}}</div>
-        <div>head: {{head}}</div>
-        <div>body: {{body}}</div>
-        <div>content: {{content}}</div>
+        <div><a href="/page/{{page_id}}">[{{formatDate timestamp "long"}}] URL: {{url}}</a></div>
       </li>
     {{/each}}
     </ul>

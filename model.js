@@ -1,4 +1,5 @@
 ////////// Shared code (client and server) //////////
+APP_COOKIE_NAMESPACE = '__wiit';
 
 // Collections
 /*
@@ -47,10 +48,17 @@ NotificationType = {
     CAMPAIGN: 3,
     NEGATIVE_REVIEW: 4,
     NEW_ADVOCATE: 5
-}
+};
+
+
+AppCookie = {
+    visitor_id: APP_COOKIE_NAMESPACE + '_vid',
+    page_id: APP_COOKIE_NAMESPACE + '_pid'
+};
 
 /*
- {  }
+ Anonymous users/unique users via cookie
+ { pages:[{page_id, visits:int, score:int}] }
  */
 Visitors = new Meteor.Collection('visitors');
 
